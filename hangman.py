@@ -35,12 +35,12 @@ correctAttempt = len(chosenWord)
 # print(chosenWordHiddenStr)
 
 # Game State
-# TODO Update the displayed word after each correct letter guess. - Complete
+# Update the displayed word after each correct letter guess. - Complete
 print("Welcome to Hangman!")
 print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
 
 # Taking User Input
-# TODO Handle repeated guesses and provide appropriate feedback. - Complete
+# Handle repeated guesses and provide appropriate feedback. - Complete
 # while correctAttempt != 0:
 while True:
     # Start time, restriction is 30 sec
@@ -57,6 +57,7 @@ while True:
     guessList = []
     updateCounter = 1
 
+    # Game Logic
     if guess.isalpha() and len(guess) == 1:
         # Check if guess letter is correct
         if guess in chosenWord:

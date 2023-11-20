@@ -105,18 +105,17 @@ while True:
         else:
                 incorrectGuesses += 1
                 if incorrectGuesses == 1:
-                    print(hangman1)
-
+                    print(f"{hangman1}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
                 elif incorrectGuesses == 2:
-                    print(hangman2)
+                    print(f"{hangman2}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
                 elif incorrectGuesses == 3:
-                    print(hangman3)
+                    print(f"{hangman3}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
                 elif incorrectGuesses == 4:
-                    print(hangman4)
+                    print(f"{hangman4}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
                 elif incorrectGuesses == 5:
-                    print(hangman5)
+                    print(f"{hangman5}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
                 else:
-                    print(hangman6)
+                    print(f"{hangman1}\nYou're dead!")
     else:
         print("Invalid input. Please enter a single letter.")
     

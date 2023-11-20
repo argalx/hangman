@@ -24,6 +24,7 @@ for wordIndex in range(1, len(chosenWord)+1):
     chosenWordHidden.append("_")
 
 # Incorrect Attempts Up to 6
+totalGameAttempt = 6
 incorrectGuesses = 0
 # Correct Attempts equals to chosen word length to complete the game
 correctAttempt = len(chosenWord)
@@ -54,13 +55,21 @@ while True:
         print("Time's up! You ran out of time.")
         break
 
-    guessList = []
     updateCounter = 1
 
     # Game Logic
     if guess.isalpha() and len(guess) == 1:
+
+        # check if letter is repeated
+        letterCounter = 0
+
+        for repeatedLetterIndex, repeatedLetter in enumerate(chosenWord):
+            if repeatedLetter == guess and chosenWordHidden[repeatedLetterIndex] == "_":
+                letterCounter += 1
+
         # Check if guess letter is correct
-        if guess in chosenWord:
+        if guess in chosenWord and letterCounter > 0:
+
             # Check letter and index in chosen word
             for index, letter in enumerate(chosenWord):
 
@@ -71,14 +80,15 @@ while True:
                     if updateCounter == 1 and chosenWordHidden[index] == "_":
                         chosenWordHidden[index] = guess
                         updateCounter -= 1
+                        correctAttempt -= 1
 
             # Update the correct answer counter to 1
             updateCounter += 1
-            correctAttempt -= 1
+    
             # Convert chosen word list to string
             chosenWordHiddenStr = str(chosenWordHidden)
             # List all string to be replaced from chosen word list string
-            chosenWordHiddenReplacement = [("[", ""), ("]", ""), ("'",""), (",", "")]
+            chosenWordHiddenReplacement = [("[", ""), ("]", ""), ("'",""), (",", ""), (" ", "")]
 
             # Iterate each string from replacement list and proceed with the replacement for chosen word list
             for char, rep in chosenWordHiddenReplacement:
@@ -92,10 +102,11 @@ while True:
                 print(f'Guess letter is corret UwU\nThe word is: "{chosenWordHiddenStr}" <3')
         # Tracking Incorrect Attempts
         #  TODO Display the Hangman figure progressively for each incorrect guess.           
-        elif guess not in chosenWord:
+        else:
                 incorrectGuesses += 1
                 if incorrectGuesses == 1:
                     print(hangman1)
+
                 elif incorrectGuesses == 2:
                     print(hangman2)
                 elif incorrectGuesses == 3:
@@ -113,7 +124,7 @@ while True:
     if correctAttempt == 0:
         print("Congratulations! You guessed the word")
         # Play Again Option
-        playAgain = input("Want to play this shitty game again? Yes/No: ")
+        playAgain = input("Want to play again? Yes/No: ")
         if playAgain.lower() == "yes":
             # Reset variables
             chosenWord = choice(wordList)
@@ -125,12 +136,12 @@ while True:
             print("Welcome to Hangman!")
             print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
         else:
-            print("Thank you for playing, I hope I don't see you again")
+            print("Thank you for playing!")
             break
     elif incorrectGuesses >= 6:
-        print(f"Sorry, you ran out of attempts. The word was:{chosenWord}")
+        print(f"Sorry, you ran out of attempts. The word was: {chosenWord}")
         # Play Again Option
-        playAgain = input("Want to play this shitty game again? Yes/No: ")
+        playAgain = input("Want to play again? Yes/No: ")
         if playAgain.lower() == "yes":
             # Reset variables
             chosenWord = choice(wordList)
@@ -142,5 +153,5 @@ while True:
             print("Welcome to Hangman!")
             print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
         else:
-            print("Thank you for playing, I hope I don't see you again")
+            print("Thank you for playing!")
             break

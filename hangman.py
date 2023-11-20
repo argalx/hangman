@@ -2,8 +2,9 @@
 from random import choice
 from time import time
 
-# Word List
+# Word and Hint lists
 wordList = ["apple", "banana", "orange", "grape", "kiwi"]
+wordHintList = {"apple": ["Name of a fruit", "Color red", "Adam & Eve ate this fruit"], "banana": ["Name of a fruit", "Color yellow", "Monkey's favorite"], "orange": ["Name of a fruit", "Color orange", "Popular juice flavor fruit"], "grape": ["Name of a fruit", "Color violet", "Can be fermented to create wine"], "kiwi": ["Name of a fruit", "Color brown", "Lemurs favorite"]}
 
 # Hangman Drawing
 hangman6 = "  _______\n |       |\nx.x      |\n/|\\      |\n |       |\n/ \\      |\n         |"
@@ -23,6 +24,17 @@ chosenWord = choice(wordList)
 for wordIndex in range(1, len(chosenWord)+1):
     chosenWordHidden.append("_")
 
+# Initialize Chosen Word List Str
+# Convert chosen word list to string
+chosenWordHiddenStr = str(chosenWordHidden)
+# List all string to be replaced from chosen word list string
+chosenWordHiddenReplacement = [("[", ""), ("]", ""), ("'",""), (",", "")]
+
+# Iterate each string from replacement list and proceed with the replacement for chosen word list
+for char, rep in chosenWordHiddenReplacement:
+    if char in chosenWordHiddenStr:
+        chosenWordHiddenStr = chosenWordHiddenStr.replace(char, rep)
+
 # Incorrect Attempts Up to 6
 totalGameAttempt = 6
 incorrectGuesses = 0
@@ -37,8 +49,10 @@ correctAttempt = len(chosenWord)
 
 # Game State
 # Update the displayed word after each correct letter guess. - Complete
-print("Welcome to Hangman!")
+print("Welcome to Hangman!\nGuess the hidden word and win the game.\n6 incorrect guess attempts and you lose.")
 print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
+# Word hint
+print(f"Hint: {choice(wordHintList[chosenWord])}")
 
 # Taking User Input
 # Handle repeated guesses and provide appropriate feedback. - Complete
@@ -52,8 +66,25 @@ while True:
     # 30 Sec Timeout Rule
     elapsedTime = time() - startTime
     if elapsedTime > 30:
-        print("Time's up! You ran out of time.")
-        break
+        print(f"Time's up! You ran out of time. The word was: {chosenWord}")
+        # Play Again Option
+        playAgain = input("Want to play again? (Y) Yes/ (N) No: ")
+        if playAgain.lower() == "y":
+            # Reset variables
+            chosenWord = choice(wordList)
+            chosenWordHidden = []
+            for wordIndex in range(1, len(chosenWord)+1):
+                chosenWordHidden.append("_")
+            incorrectGuesses = 0
+            correctAttempt = len(chosenWord)
+            print("Welcome to Hangman!\nGuess the hidden word and win the game.\n6 incorrect guess attempts and you lose.")
+            print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
+            # Word hint
+            print(f"Hint: {choice(wordHintList[chosenWord])}")
+            
+        else:
+            print("Thank you for playing!")
+            break
 
     updateCounter = 1
 
@@ -88,7 +119,7 @@ while True:
             # Convert chosen word list to string
             chosenWordHiddenStr = str(chosenWordHidden)
             # List all string to be replaced from chosen word list string
-            chosenWordHiddenReplacement = [("[", ""), ("]", ""), ("'",""), (",", ""), (" ", "")]
+            chosenWordHiddenReplacement = [("[", ""), ("]", ""), ("'",""), (",", "")]
 
             # Iterate each string from replacement list and proceed with the replacement for chosen word list
             for char, rep in chosenWordHiddenReplacement:
@@ -97,34 +128,46 @@ while True:
                 
             # In-Game Output, Check the letter guess status and display appropriate message
             if "_" in chosenWordHiddenStr:
-                print(f'Guess letter is corret UwU\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters OwO')
+                print(f'Guess letter is correct.\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                # Word hint
+                print(f"Hint: {choice(wordHintList[chosenWord])}")
             else:
-                print(f'Guess letter is corret UwU\nThe word is: "{chosenWordHiddenStr}" <3')
+                print(f'Guess letter is correct.\nThe word is: "{chosenWord}".')
         # Tracking Incorrect Attempts
         #  TODO Display the Hangman figure progressively for each incorrect guess.           
         else:
                 incorrectGuesses += 1
                 if incorrectGuesses == 1:
-                    print(f"{hangman1}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
+                    print(f'{hangman1}\n{totalGameAttempt - incorrectGuesses} attempt remaining!\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                    # Word hint
+                    print(f"Hint: {choice(wordHintList[chosenWord])}")
                 elif incorrectGuesses == 2:
-                    print(f"{hangman2}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
+                    print(f'{hangman2}\n{totalGameAttempt - incorrectGuesses} attempt remaining!\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                    # Word hint
+                    print(f"Hint: {choice(wordHintList[chosenWord])}")
                 elif incorrectGuesses == 3:
-                    print(f"{hangman3}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
+                    print(f'{hangman3}\n{totalGameAttempt - incorrectGuesses} attempt remaining!\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                    # Word hint
+                    print(f"Hint: {choice(wordHintList[chosenWord])}")
                 elif incorrectGuesses == 4:
-                    print(f"{hangman4}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
+                    print(f'{hangman4}\n{totalGameAttempt - incorrectGuesses} attempt remaining!\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                    # Word hint
+                    print(f"Hint: {choice(wordHintList[chosenWord])}")
                 elif incorrectGuesses == 5:
-                    print(f"{hangman5}\n{totalGameAttempt - incorrectGuesses} attempt remaining!")
+                    print(f'{hangman5}\n{totalGameAttempt - incorrectGuesses} attempt remaining!\nThe word has {len(chosenWord)} letters: "{chosenWordHiddenStr}" guess the remaining letters.')
+                    # Word hint
+                    print(f"Hint: {choice(wordHintList[chosenWord])}")
                 else:
-                    print(f"{hangman1}\nYou're dead!")
+                    print(f"{hangman6}\nYou lose!")
     else:
         print("Invalid input. Please enter a single letter.")
     
     # Win/Lose Condition
     if correctAttempt == 0:
-        print("Congratulations! You guessed the word")
+        print("Congratulations! You guessed the word.")
         # Play Again Option
-        playAgain = input("Want to play again? Yes/No: ")
-        if playAgain.lower() == "yes":
+        playAgain = input("Want to play again? (Y) Yes/ (N) No: ")
+        if playAgain.lower() == "y":
             # Reset variables
             chosenWord = choice(wordList)
             chosenWordHidden = []
@@ -132,16 +175,18 @@ while True:
                 chosenWordHidden.append("_")
             incorrectGuesses = 0
             correctAttempt = len(chosenWord)
-            print("Welcome to Hangman!")
+            print("Welcome to Hangman!\nGuess the hidden word and win the game.\n6 incorrect guess attempts and you lose.")
             print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
+            # Word hint
+            print(f"Hint: {choice(wordHintList[chosenWord])}")
         else:
             print("Thank you for playing!")
             break
     elif incorrectGuesses >= 6:
         print(f"Sorry, you ran out of attempts. The word was: {chosenWord}")
         # Play Again Option
-        playAgain = input("Want to play again? Yes/No: ")
-        if playAgain.lower() == "yes":
+        playAgain = input("Want to play again? (Y) Yes/ (N) No: ")
+        if playAgain.lower() == "y":
             # Reset variables
             chosenWord = choice(wordList)
             chosenWordHidden = []
@@ -149,8 +194,10 @@ while True:
                 chosenWordHidden.append("_")
             incorrectGuesses = 0
             correctAttempt = len(chosenWord)
-            print("Welcome to Hangman!")
+            print("Welcome to Hangman!\nGuess the hidden word and win the game.\n6 incorrect guess attempts and you lose.")
             print("The word has", len(chosenWord), "letters: " + "_ " * len(chosenWord))
+            # Word hint
+            print(f"Hint: {choice(wordHintList[chosenWord])}")
         else:
             print("Thank you for playing!")
             break
